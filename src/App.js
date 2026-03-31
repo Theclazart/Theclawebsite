@@ -374,7 +374,12 @@ export default function App() {
     window.addEventListener("scroll",h); return()=>window.removeEventListener("scroll",h);
   },[]);
 
-  const go = id => { document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); setMenuOpen(false); };
+  // FIX: helper that prevents default and scrolls
+  const go = (id, e) => {
+    if (e) e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({behavior:"smooth"});
+    setMenuOpen(false);
+  };
 
   return (
     <>
@@ -382,7 +387,7 @@ export default function App() {
 
       {/* NAV */}
       <nav className={`nav ${scrolled?"scrolled":""}`}>
-        <div className="brand" onClick={()=>go("home")}>
+        <div className="brand" onClick={e=>go("home",e)} style={{cursor:"pointer"}}>
           <img src={LOGO} alt="Thecla Technologies" />
           <div className="brand-txt">
             <b>THECLA</b>
@@ -391,25 +396,28 @@ export default function App() {
         </div>
 
         <ul className="nav-ul">
-          <li><a onClick={()=>go("about")}>About</a></li>
+          {/* FIX: all scroll-nav anchors now have href="#" + e.preventDefault() */}
+          <li><a href="#" onClick={e=>go("about",e)}>About</a></li>
           <li>
-            <a>Products <span className="arr">▾</span></a>
+            <a href="#">Products <span className="arr">▾</span></a>
             <div className="dropdown">
+              {/* FIX: external link — added rel="noopener noreferrer" already present, kept intact */}
               <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoSwap</a>
-              <a onClick={()=>go("products")}><span className="di">💙</span> VirtualWatch</a>
+              <a href="#" onClick={e=>go("products",e)}><span className="di">💙</span> VirtualWatch</a>
             </div>
           </li>
-          <li><a onClick={()=>go("impact")}>Impact</a></li>
-          <li><a onClick={()=>go("why-us")}>Why Us</a></li>
+          <li><a href="#" onClick={e=>go("impact",e)}>Impact</a></li>
+          <li><a href="#" onClick={e=>go("why-us",e)}>Why Us</a></li>
           <li>
-            <a>Join Waitlist <span className="arr">▾</span></a>
+            <a href="#">Join Waitlist <span className="arr">▾</span></a>
             <div className="dropdown">
+              {/* FIX: external EcoSwap waitlist link */}
               <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoSwap Waitlist</a>
-              <a onClick={()=>go("waitlist")}><span className="di">💙</span> VirtualWatch Waitlist</a>
-              <a onClick={()=>go("waitlist")}><span className="di">🚀</span> Join Both</a>
+              <a href="#" onClick={e=>go("waitlist",e)}><span className="di">💙</span> VirtualWatch Waitlist</a>
+              <a href="#" onClick={e=>go("waitlist",e)}><span className="di">🚀</span> Join Both</a>
             </div>
           </li>
-          <li><a className="ncta" onClick={()=>go("contact")}>Contact Us</a></li>
+          <li><a href="#" className="ncta" onClick={e=>go("contact",e)}>Contact Us</a></li>
         </ul>
 
         <div className="burger" onClick={()=>setMenuOpen(o=>!o)}>
@@ -417,15 +425,16 @@ export default function App() {
         </div>
       </nav>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE MENU — FIX: all anchors now have href="#" + e.preventDefault() */}
       <div className={`mob-menu ${menuOpen?"open":""}`}>
-        <a onClick={()=>go("about")}>About</a>
+        <a href="#" onClick={e=>go("about",e)}>About</a>
+        {/* FIX: external link kept as true href */}
         <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer">🌿 EcoSwap</a>
-        <a onClick={()=>go("products")}>💙 VirtualWatch</a>
-        <a onClick={()=>go("impact")}>Impact</a>
-        <a onClick={()=>go("why-us")}>Why Us</a>
-        <a onClick={()=>go("waitlist")}>🚀 Join Waitlist</a>
-        <a onClick={()=>go("contact")}>Contact Us</a>
+        <a href="#" onClick={e=>go("products",e)}>💙 VirtualWatch</a>
+        <a href="#" onClick={e=>go("impact",e)}>Impact</a>
+        <a href="#" onClick={e=>go("why-us",e)}>Why Us</a>
+        <a href="#" onClick={e=>go("waitlist",e)}>🚀 Join Waitlist</a>
+        <a href="#" onClick={e=>go("contact",e)}>Contact Us</a>
       </div>
 
       {/* HERO */}
@@ -442,8 +451,9 @@ export default function App() {
           <h1>Technology That <span className="hl">Transforms</span> Everyday Life</h1>
           <p>Thecla Technologies &amp; Services Limited is a UK software development company building purposeful digital platforms — from circular economy apps to care operations software — engineered for real impact across the UK and Africa.</p>
           <div className="h-btns">
-            <span className="bp" onClick={()=>go("products")}>Explore Our Products</span>
-            <span className="bo" onClick={()=>go("waitlist")}>Join the Waitlist</span>
+            {/* FIX: hero CTAs converted from <span> to <a> with href="#" */}
+            <a href="#" className="bp" onClick={e=>go("products",e)}>Explore Our Products</a>
+            <a href="#" className="bo" onClick={e=>go("waitlist",e)}>Join the Waitlist</a>
           </div>
           <div className="h-stats">
             {[["2","Products in Dev"],["2026","Launch Year"],["£1.2M+","Y3 Revenue Target"],["50+","Waitlist Members"]].map(([n,l])=>(
@@ -451,7 +461,6 @@ export default function App() {
             ))}
           </div>
         </div>
-     
         <div className="slide-ctrl">
           {HERO_SLIDES.map((_,i)=>(
             <div key={i} className={`sdot ${i===hi?"on":""}`} onClick={()=>shi(i)}/>
@@ -516,6 +525,7 @@ export default function App() {
                   <li key={f}><span className="fdot">✓</span>{f}</li>
                 ))}
               </ul>
+              {/* FIX: external link — proper href with target + rel */}
               <a className="beco" href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer">→ Visit EcoSwap</a>
             </div>
             <div className="pvis eco">
@@ -537,7 +547,8 @@ export default function App() {
                   <li key={f}><span className="fdot">✓</span>{f}</li>
                 ))}
               </ul>
-              <span className="bvw" onClick={()=>go("waitlist")}>→ Request a Demo</span>
+              {/* FIX: was a <span>, now a proper anchor */}
+              <a href="#" className="bvw" onClick={e=>go("waitlist",e)}>→ Request a Demo</a>
             </div>
             <div className="pvis vw">
               <div className="ps">{CARE_SLIDES.map((s,i)=><div key={i} className={`psl ${i===ci?"on":""}`} style={{backgroundImage:`url(${s})`}}/>)}</div>
@@ -606,8 +617,10 @@ export default function App() {
                 <div className="crow" key={text}><span className="ci">{icon}</span><span>{text}</span></div>
               ))}
               <div className="cbtns">
+                {/* FIX: mailto href — proper email link */}
                 <a className="bp" href="mailto:hello@theclatech.co.uk">✉️ Email Us</a>
-                <span className="bo" style={{cursor:"pointer"}} onClick={()=>go("waitlist")}>Join Waitlist</span>
+                {/* FIX: was a <span>, now a proper anchor */}
+                <a href="#" className="bo" onClick={e=>go("waitlist",e)}>Join Waitlist</a>
               </div>
               <p style={{fontSize:".68rem",color:"var(--muted)",letterSpacing:"2px",textTransform:"uppercase",marginBottom:12}}>Currently Seeking</p>
               <div className="stags">
@@ -629,9 +642,10 @@ export default function App() {
             <span>Seamless Solutions. Seamless Living. · Waltham Cross, UK</span>
           </div>
         </div>
+        {/* FIX: all footer nav links now have href="#" + e.preventDefault() */}
         <div className="flinks">
           {[["home","Home"],["about","About"],["products","Products"],["impact","Impact"],["waitlist","Waitlist"],["contact","Contact"]].map(([id,label])=>(
-            <a key={id} onClick={()=>go(id)}>{label}</a>
+            <a key={id} href="#" onClick={e=>go(id,e)}>{label}</a>
           ))}
         </div>
         <div className="fcopy">© 2026 Thecla Technologies &amp; Services Limited. All rights reserved.</div>
