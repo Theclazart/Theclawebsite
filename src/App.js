@@ -451,13 +451,7 @@ export default function App() {
             ))}
           </div>
         </div>
-        <div className="h-logo-block">
-          <img src={LOGO} alt="Thecla Technologies"/>
-          <div className="h-logo-text">
-            <b>THECLA</b>
-            <span>Technologies &amp; Services</span>
-          </div>
-        </div>
+     
         <div className="slide-ctrl">
           {HERO_SLIDES.map((_,i)=>(
             <div key={i} className={`sdot ${i===hi?"on":""}`} onClick={()=>shi(i)}/>
