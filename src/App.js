@@ -429,7 +429,7 @@ export default function App() {
           <li><a href="https://www.theclaservices.com" onClick={e=>go("impact",e)}>Impact</a></li>
           <li><a href="https://www.theclaservices.com#" onClick={e=>go("why-us",e)}>Why Us</a></li>
           <li>
-            <a href="#">Join Waitlist <span className="arr">▾</span></a>
+            <a href="https://tally.so/r/XxYoOg">Join Waitlist <span className="arr">▾</span></a>
             <div className="dropdown">
               {/* FIX: external EcoSwap waitlist link */}
               <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoSwap Waitlist</a>
