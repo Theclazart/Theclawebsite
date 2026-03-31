@@ -309,14 +309,34 @@ function WaitlistForm() {
     return e;
   };
 
-  const submit = async () => {
-    const e = validate();
-    if(Object.keys(e).length) { setErrors(e); return; }
-    setLoading(true);
-    await new Promise(r => setTimeout(r, 1400));
-    setLoading(false);
+ const SHEETDB_URL = "https://sheetdb.io/api/v1/qzyh3aepjki9w";
+
+const submit = async () => {
+  const e = validate();
+  if(Object.keys(e).length) { setErrors(e); return; }
+  setLoading(true);
+  try {
+    const res = await fetch(SHEETDB_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        data: {
+          timestamp: new Date().toISOString(),
+          name:      form.name,
+          email:     form.email,
+          phone:     form.phone || "",
+          products:  sel.join(", "),
+        }
+      })
+    });
+    if(!res.ok) throw new Error("SheetDB error");
     setDone(true);
-  };
+  } catch(err) {
+    setErrors({ api: "Something went wrong. Please try again." });
+  } finally {
+    setLoading(false);
+  }
+};
 
   if(done) return (
     <div className="wl-success">
@@ -397,27 +417,27 @@ export default function App() {
 
         <ul className="nav-ul">
           {/* FIX: all scroll-nav anchors now have href="#" + e.preventDefault() */}
-          <li><a href="#" onClick={e=>go("about",e)}>About</a></li>
+          <li><a href="https://www.theclaservices.com" onClick={e=>go("about",e)}>About</a></li>
           <li>
-            <a href="#">Products <span className="arr">▾</span></a>
+            <a href="https://www.theclaservices.com">Products <span className="arr">▾</span></a>
             <div className="dropdown">
               {/* FIX: external link — added rel="noopener noreferrer" already present, kept intact */}
               <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoSwap</a>
-              <a href="#" onClick={e=>go("products",e)}><span className="di">💙</span> VirtualWatch</a>
+              <a href="https://theclaservices.com" onClick={e=>go("products",e)}><span className="di">💙</span> VirtualWatch</a>
             </div>
           </li>
-          <li><a href="#" onClick={e=>go("impact",e)}>Impact</a></li>
-          <li><a href="#" onClick={e=>go("why-us",e)}>Why Us</a></li>
+          <li><a href="https://www.theclaservices.com" onClick={e=>go("impact",e)}>Impact</a></li>
+          <li><a href="https://www.theclaservices.com#" onClick={e=>go("why-us",e)}>Why Us</a></li>
           <li>
             <a href="#">Join Waitlist <span className="arr">▾</span></a>
             <div className="dropdown">
               {/* FIX: external EcoSwap waitlist link */}
               <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoSwap Waitlist</a>
-              <a href="#" onClick={e=>go("waitlist",e)}><span className="di">💙</span> VirtualWatch Waitlist</a>
-              <a href="#" onClick={e=>go("waitlist",e)}><span className="di">🚀</span> Join Both</a>
+              <a href="https://tally.so/r/XxYoOg" onClick={e=>go("waitlist",e)}><span className="di">💙</span> VirtualWatch Waitlist</a>
+              <a href="https://tally.so/r/XxYoOg" onClick={e=>go("waitlist",e)}><span className="di">🚀</span> Join Both</a>
             </div>
           </li>
-          <li><a href="#" className="ncta" onClick={e=>go("contact",e)}>Contact Us</a></li>
+          <li><a href="https://www.theclaservices.com" className="ncta" onClick={e=>go("contact",e)}>Contact Us</a></li>
         </ul>
 
         <div className="burger" onClick={()=>setMenuOpen(o=>!o)}>
@@ -427,14 +447,14 @@ export default function App() {
 
       {/* MOBILE MENU — FIX: all anchors now have href="#" + e.preventDefault() */}
       <div className={`mob-menu ${menuOpen?"open":""}`}>
-        <a href="#" onClick={e=>go("about",e)}>About</a>
+        <a href="https://www.theclaservices.com" onClick={e=>go("about",e)}>About</a>
         {/* FIX: external link kept as true href */}
         <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer">🌿 EcoSwap</a>
-        <a href="#" onClick={e=>go("products",e)}>💙 VirtualWatch</a>
-        <a href="#" onClick={e=>go("impact",e)}>Impact</a>
-        <a href="#" onClick={e=>go("why-us",e)}>Why Us</a>
-        <a href="#" onClick={e=>go("waitlist",e)}>🚀 Join Waitlist</a>
-        <a href="#" onClick={e=>go("contact",e)}>Contact Us</a>
+        <a href="https://www.theclaservices.com" onClick={e=>go("products",e)}>💙 VirtualWatch</a>
+        <a href="https://www.theclaservices.com" onClick={e=>go("impact",e)}>Impact</a>
+        <a href="https://www.theclaservices.com" onClick={e=>go("why-us",e)}>Why Us</a>
+        <a href="https://www.theclaservices.com" onClick={e=>go("waitlist",e)}>🚀 Join Waitlist</a>
+        <a href="https://www.theclaservices.com" onClick={e=>go("contact",e)}>Contact Us</a>
       </div>
 
       {/* HERO */}
@@ -452,8 +472,8 @@ export default function App() {
           <p>Thecla Technologies &amp; Services Limited is a UK software development company building purposeful digital platforms — from circular economy apps to care operations software — engineered for real impact across the UK and Africa.</p>
           <div className="h-btns">
             {/* FIX: hero CTAs converted from <span> to <a> with href="#" */}
-            <a href="#" className="bp" onClick={e=>go("products",e)}>Explore Our Products</a>
-            <a href="#" className="bo" onClick={e=>go("waitlist",e)}>Join the Waitlist</a>
+            <a href="https://www.ecoswap.live" className="bp" onClick={e=>go("products",e)}>Explore Our Products</a>
+            <a href="https://www.theclaservices.com" className="bo" onClick={e=>go("waitlist",e)}>Join the Waitlist</a>
           </div>
           <div className="h-stats">
             {[["2","Products in Dev"],["2026","Launch Year"],["£1.2M+","Y3 Revenue Target"],["50+","Waitlist Members"]].map(([n,l])=>(
@@ -548,7 +568,7 @@ export default function App() {
                 ))}
               </ul>
               {/* FIX: was a <span>, now a proper anchor */}
-              <a href="#" className="bvw" onClick={e=>go("waitlist",e)}>→ Request a Demo</a>
+              <a href="https://tally.so/r/XxYoOg" className="bvw" onClick={e=>go("waitlist",e)}>→ Request a Demo</a>
             </div>
             <div className="pvis vw">
               <div className="ps">{CARE_SLIDES.map((s,i)=><div key={i} className={`psl ${i===ci?"on":""}`} style={{backgroundImage:`url(${s})`}}/>)}</div>
@@ -618,9 +638,9 @@ export default function App() {
               ))}
               <div className="cbtns">
                 {/* FIX: mailto href — proper email link */}
-                <a className="bp" href="mailto:hello@theclatech.co.uk">✉️ Email Us</a>
+                <a className="bp" href="mailto:thecla.e@theclaservices.com">✉️ Email Us</a>
                 {/* FIX: was a <span>, now a proper anchor */}
-                <a href="#" className="bo" onClick={e=>go("waitlist",e)}>Join Waitlist</a>
+                <a href="https://tally.so/r/XxYoOg" className="bo" onClick={e=>go("waitlist",e)}>Join Waitlist</a>
               </div>
               <p style={{fontSize:".68rem",color:"var(--muted)",letterSpacing:"2px",textTransform:"uppercase",marginBottom:12}}>Currently Seeking</p>
               <div className="stags">
@@ -645,7 +665,7 @@ export default function App() {
         {/* FIX: all footer nav links now have href="#" + e.preventDefault() */}
         <div className="flinks">
           {[["home","Home"],["about","About"],["products","Products"],["impact","Impact"],["waitlist","Waitlist"],["contact","Contact"]].map(([id,label])=>(
-            <a key={id} href="#" onClick={e=>go(id,e)}>{label}</a>
+            <a key={id} href="https://tally.so/r/XxYoOg" onClick={e=>go(id,e)}>{label}</a>
           ))}
         </div>
         <div className="fcopy">© 2026 Thecla Technologies &amp; Services Limited. All rights reserved.</div>
@@ -653,3 +673,4 @@ export default function App() {
     </>
   );
 }
+
