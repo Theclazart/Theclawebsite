@@ -423,7 +423,7 @@ export default function App() {
             <a href="https://www.theclaservices.com">Products <span className="arr">▾</span></a>
             <div className="dropdown">
               {/* FIX: external link — added rel="noopener noreferrer" already present, kept intact */}
-              <a href="https://www.Ecoswap.live" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoPro</a>
+              <a href="https://www.Ecopro.business" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoPro</a>
               <a href="https://theclaservices.com" onClick={e=>go("products",e)}><span className="di">💙</span> VirtualWatch</a>
             </div>
           </li>
@@ -433,7 +433,7 @@ export default function App() {
             <a href="https://tally.so/r/XxYoOg">Join Waitlist <span className="arr">▾</span></a>
             <div className="dropdown">
               {/* FIX: external EcoPro waitlist link */}
-              <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoPro Waitlist</a>
+              <a href="https://www.ecopro.business" target="_blank" rel="noopener noreferrer"><span className="di">🌿</span> EcoPro Waitlist</a>
               <a href="https://tally.so/r/XxYoOg" onClick={e=>go("waitlist",e)}><span className="di">💙</span> VirtualWatch Waitlist</a>
               <a href="https://tally.so/r/XxYoOg" onClick={e=>go("waitlist",e)}><span className="di">🚀</span> Join Both</a>
             </div>
@@ -450,7 +450,7 @@ export default function App() {
       <div className={`mob-menu ${menuOpen?"open":""}`}>
         <a href="https://www.theclaservices.com" onClick={e=>go("about",e)}>About</a>
         {/* FIX: external link kept as true href */}
-        <a href="https://www.ecoswap.live" target="_blank" rel="noopener noreferrer">🌿 EcoPro</a>
+        <a href="https://www.ecopro.business" target="_blank" rel="noopener noreferrer">🌿 EcoPro</a>
         <a href="https://www.theclaservices.com" onClick={e=>go("products",e)}>💙 VirtualWatch</a>
         <a href="https://www.theclaservices.com" onClick={e=>go("impact",e)}>Impact</a>
         <a href="https://www.theclaservices.com" onClick={e=>go("why-us",e)}>Why Us</a>
@@ -473,7 +473,7 @@ export default function App() {
           <p>Thecla Technologies &amp; Services Limited is a UK software development company building purposeful digital platforms — from circular economy apps to care operations software — engineered for real impact across the UK and Africa.</p>
           <div className="h-btns">
             {/* FIX: hero CTAs converted from <span> to <a> with href="#" */}
-            <a href="https://www.ecoswap.live" className="bp" onClick={e=>go("products",e)}>Explore Our Products</a>
+            <a href="https://www.ecopro.business" className="bp" onClick={e=>go("products",e)}>Explore Our Products</a>
             <a href="https://www.theclaservices.com" className="bo" onClick={e=>go("waitlist",e)}>Join the Waitlist</a>
           </div>
           <div className="h-stats">
